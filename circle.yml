@@ -1,0 +1,7 @@
+machine:
+  node:
+    version: 0.10
+
+test:
+  override:
+    - ./node_modules/.bin/mocha

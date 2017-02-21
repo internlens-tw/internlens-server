@@ -4,7 +4,7 @@
   "description": "Backend API server for Intern-lens.",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "./node_modules/.bin/mocha",
     "start": "node app.js"
   },
   "repository": {
