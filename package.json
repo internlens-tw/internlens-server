@@ -1,0 +1,31 @@
+{
+  "name": "internlens-server",
+  "version": "1.0.0",
+  "description": "Backend API server for Intern-lens.",
+  "main": "app.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internlens-tw/internlens-server.git"
+  },
+  "keywords": [
+    "internlens",
+    "API",
+    "server"
+  ],
+  "author": "Amy Lin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/internlens-tw/internlens-server/issues"
+  },
+  "homepage": "https://github.com/internlens-tw/internlens-server#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
+}
