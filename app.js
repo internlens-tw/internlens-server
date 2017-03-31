@@ -11,12 +11,13 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('errorhandler');
 const path = require('path');
+const config = require('./config');
 
 const routes = {
     auth: require('./routes/auth'),
 };
 
-mongoose.connect('mongodb://localhost/interlens');
+mongoose.connect(config.mongodbUrl);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());

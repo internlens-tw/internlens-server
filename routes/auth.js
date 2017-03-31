@@ -3,11 +3,11 @@ const express = require('express');
 const router = new express.Router();
 const request = require('request-promise');
 const User = require('../models/user.js');
-const credential = require('../credential.js');
+const config = require('../config.js');
 const cert = require('fs').readFileSync('rsa.private');
 const GoogleAuth = require('google-auth-library');
 const auth = new GoogleAuth;
-const client = new auth.OAuth2(credential.googleAuth.clientID, '', '');
+const client = new auth.OAuth2(config.googleAuth.clientID, '', '');
 
 /*
   FB test user:
@@ -85,7 +85,7 @@ module.exports = (function() {
     router.get('/google/:token', (req, res) => {
         client.verifyIdToken(
             req.params.token,
-            credential.googleAuth.clientID,
+            config.googleAuth.clientID,
             function(err, login) {
                 if (err) {
                     res.status(401).send('Google token error');
@@ -113,7 +113,7 @@ module.exports = (function() {
 
     router.post('/register/google', (req, res) => {
         client.verifyIdToken(req.body.token,
-            credential.googleAuth.clientID,
+            config.googleAuth.clientID,
             (err, login) => {
                 if (err) {
                     res.status(401).send('Google token error');
