@@ -5,8 +5,14 @@
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha",
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "eslint ./ --cache --ignore-pattern .gitignore",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
+  "pre-commit": [
+    "precommit-msg",
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/internlens-tw/internlens-server.git"
@@ -42,6 +48,9 @@
     "serve-favicon": "^2.4.1"
   },
   "devDependencies": {
-    "mocha": "^3.2.0"
+    "eslint": "^3.18.0",
+    "eslint-config-google": "^0.7.1",
+    "mocha": "^3.2.0",
+    "pre-commit": "^1.2.2"
   }
 }

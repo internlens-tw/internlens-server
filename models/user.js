@@ -1,15 +1,15 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var userSchema = new Schema({
-  OAuthid: Number,
-  method: String, // FB | Google
-  name: String,
-  nickname: String,
-  email: String,
-  created_at: Date,
+const userSchema = new Schema({
+    OAuthid: Number,
+    method: String, // FB | Google
+    name: String,
+    nickname: String,
+    email: String,
+    created_at: Date,
 }, {
-  timestamps: true
+    timestamps: true,
 });
 
 // Makes { OAuthid + method } unique.
