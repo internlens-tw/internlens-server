@@ -14,7 +14,7 @@ Node.js backend server for internlens API.
 ```
 cp config.js.example config.js
 vim config.js  # Fill in the blanks
-ssh-gen -f rsa.private
+ssh-keygen -f rsa.private && ssh-keygen -e -m PEM -f rsa.private.pub > rsa.public && rm rsa.private.pub
 npm install
 ```
 
