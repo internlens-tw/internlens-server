@@ -37,7 +37,7 @@ const checkIDExists = (method, id, res) => {
             });
             return;
         } else { // user not found
-            res.status(401).send('Need register.');
+            res.status(403).send('Need register.');
         }
     });
 };
@@ -108,6 +108,9 @@ module.exports = (function() {
                 email: fbRes.email,
                 image: fbRes.picture.data.url,
             }, res);
+        }).catch((err) => {
+            res.status(401).send('Facebook token error');
+            return console.log('[Warning] Verify fb token:', err);
         });
     });
 
