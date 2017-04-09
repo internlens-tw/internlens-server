@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = new express.Router();
 const User = require('../models/user.js');
+const Article = require('../models/article.js');
 const publicKey = require('fs').readFileSync('rsa.public');
 
 const isAuthenticated = (req, res, next) => {
@@ -25,6 +26,7 @@ const isAuthenticated = (req, res, next) => {
                 return console.log('User _id', _id, 'not found.');
             }
 
+            req.user = user;
             next();
             return console.log('Authenticate', user);
         });
@@ -36,10 +38,21 @@ module.exports = (() => {
 
     router.post('/new', isAuthenticated, (req, res) => {
         // req.body: {
-        //	token: <JWT token>,
+        //  token: <JWT token>,
+        //  <other columns>...
         // }
-        res.send('Server undone XDDD');
-        return console.log('Authenticate success!');
+        delete req.body.token;
+        req.body.userid = req.user._id;
+
+        const post = new Article(req.body);
+        post.save(function(err, newPost) {
+            if (err) {
+                res.status(500).send('Error saving new user.');
+                return console.log('Save new article', post, 'error:', err);
+            }
+            res.send('success.');
+            console.log('New article saved:', post);
+        });
     });
 
     return router;
