@@ -47,7 +47,7 @@ module.exports = (() => {
         const post = new Article(req.body);
         post.save(function(err, newPost) {
             if (err) {
-                res.status(500).send('Error saving new user.');
+                res.status(500).send('Error saving new article.');
                 return console.log('Save new article', post, 'error:', err);
             }
             res.send('success.');
