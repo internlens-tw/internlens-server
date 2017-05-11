@@ -9,7 +9,6 @@ const articleSchema = new Schema({
         type: Number,
         min: -1, // Not typical work_hour, see work_hour_description
         max: 41,
-        required: true,
     },
     work_hour_description: String,
     job_content: String,
@@ -18,7 +17,7 @@ const articleSchema = new Schema({
     monthly_payment: Number,
     monthly_payment_description: String,
     other_payment: String,
-    payment_method: { type: String, required: true, },
+    payment_method: { type: String, required: true },
     payment_score: { type: Number, min: 0, max: 5 },
     payment_description: String,
     payment_rationality: String,
