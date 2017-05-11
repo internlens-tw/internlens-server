@@ -55,5 +55,17 @@ module.exports = (() => {
         });
     });
 
+    router.get('/:pid', (req, res) => {
+        Article.findById(req.query.pid, (err, post) => {
+            if (err) {
+                res.status(500).send('Database error.');
+                return console.error('Query:', req.query, err);
+            }
+
+            res.json(post);
+            return;
+        });
+    });
+
     return router;
 })();
