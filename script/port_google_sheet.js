@@ -68,10 +68,7 @@ async.waterfall([
                     return;
                 }
                 jsonObj.userid = anonymousId;
-                jsonObj.payment_method = '時薪';
-                const segs = jsonObj.work_hour.split(', ');
-                jsonObj.work_hour = segs[0].split('-')[1];
-                jsonObj.work_hour_description = segs[1];
+                // payment score
                 if (jsonObj.payment_score == '不合理') {
                     jsonObj.payment_score = 2;
                 } else if (jsonObj.payment_score == '十分合理，綜合的獲得上已滿足') {
