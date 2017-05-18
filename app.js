@@ -16,6 +16,7 @@ const config = require('./config');
 const routes = {
     auth: require('./routes/auth'),
     article: require('./routes/article'),
+    search: require('./routes/search'),
 };
 
 mongoose.connect(config.mongodbUrl);
@@ -55,6 +56,7 @@ app.get('/', function(req, res) {
 
 app.use('/auth', routes.auth);
 app.use('/article', routes.article);
+app.use('/search', routes.search);
 
 app.get('/logout', function(req, res) {
     req.logout();
