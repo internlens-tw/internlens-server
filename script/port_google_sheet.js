@@ -9,6 +9,10 @@ const mongoose = require('mongoose');
 const Article = require('../models/article');
 const User = require('../models/user');
 const varName = ['created_at', 'company_name', 'industry', 'job_title', 'start_date', 'job_duration', 'work_hour', 'insurance', 'job_description', 'job_description_gap_score', 'job_description_gap', 'job_content', 'payment_method', 'hourly_payment', 'hourly_payment_description', 'monthly_payment', 'monthly_payment_description', 'payment', 'payment_score', 'payment_rationality', 'learn_score', 'learn', 'reward_score', 'reward', 'feeling', 'rating', 'suggestion', 'contact'];
+const headerLines = 6;
+let readDone = false;
+let postCount = 0;
+let postDone = 0;
 
 mongoose.connect(config.mongodbUrl);
 
@@ -63,10 +67,12 @@ async.waterfall([
         csv().fromFile(csvFile)
             .on('json', (jsonObj) => { // Read csv to json
                 // Break the introduction header.
-                if (print <= 4) {
+                if (print <= headerLines) {
                     print++;
                     return;
                 }
+
+                postCount++;
                 jsonObj.userid = anonymousId;
                 // payment score
                 if (jsonObj.payment_score == '不合理') {
@@ -75,16 +81,32 @@ async.waterfall([
                     jsonObj.payment_score = 4;
                 }
 
+                // hourly payment
+                // TODO: Decide whether it should be done here or only when
+                //       further data analysis is needed?
+
+                // insurance
+                jsonObj.insurance = (jsonObj.insurance == '有') ? 1 : (
+                    jsonObj.insurance == '沒有' ? -1 : 0);
+
                 const newPost = new Article(jsonObj);
                 newPost.save((err, post) => {
                     if (err) {
                         console.error('Save', newPost, err);
                         process.exit();
                     }
+                    postDone++;
+                    console.log('Done:', post.company_name, postDone, '/', postCount);
+
+                    if (readDone && (postDone === postCount)) {
+                        console.log('Got every posts done!');
+                        process.exit();
+                    }
                 });
             })
             .on('done', (error) => { // Done reading
                 console.log('end.');
+                readDone = true;
                 callback(null);
             });
     },
