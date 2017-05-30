@@ -10,12 +10,17 @@ module.exports = (() => {
         const query = {};
         const sortby = req.body.sortby || 'updatedAt';
         const limit = parseInt(req.body.limit) || 20;
+        const softMatch = (req.body.soft_match == 'true');
 
         if (req.body.company !== undefined) {
-            query.company_name = req.body.company.toLowerCase();
+            query.company_name = softMatch ? {
+                $regex: req.body.company.toLowerCase(),
+            } : req.body.company.toLowerCase();
         }
         if (req.body.job_title !== undefined) {
-            query.job_title = req.body.job_title.toLowerCase();
+            query.job_title = softMatch ? {
+                $regex: req.body.job_title.toLowerCase(),
+            } : req.body.job_title.toLowerCase();
         }
         if (req.body.last_id !== undefined) {
             query._id = { '$lt': req.body.last_id };
