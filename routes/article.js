@@ -43,6 +43,10 @@ module.exports = (() => {
         // }
         delete req.body.token;
         req.body.userid = req.user._id;
+        req.body.company_name = req.body.company_name.toLowerCase();
+        if (req.body.job_title !== undefined) {
+            req.body.job_title = req.body.job_title.toLowerCase();
+        }
 
         const post = new Article(req.body);
         post.save(function(err, newPost) {

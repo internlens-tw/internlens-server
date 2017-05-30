@@ -8,14 +8,14 @@ module.exports = (() => {
     router.post('/', (req, res) => {
         console.log('Receive:', req.body);
         const query = {};
-        const sortby = req.body.sortby || 'updated_at';
+        const sortby = req.body.sortby || 'updatedAt';
         const limit = parseInt(req.body.limit) || 20;
 
         if (req.body.company !== undefined) {
-            query.company_name = req.body.company;
+            query.company_name = req.body.company.toLowerCase();
         }
         if (req.body.job_title !== undefined) {
-            query.job_title = req.body.job_title;
+            query.job_title = req.body.job_title.toLowerCase();
         }
         if (req.body.last_id !== undefined) {
             query._id = { '$lt': req.body.last_id };
