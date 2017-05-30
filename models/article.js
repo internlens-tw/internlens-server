@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
     userid: { type: Schema.Types.ObjectId, required: true },
-    company_name: { type: String, required: true },
+    company_name: { type: String, required: true, index: true },
     start_date: Number,
     work_hour: String,
     job_content: String,
@@ -24,7 +24,7 @@ const articleSchema = new Schema({
     },
     suggestion: String,
     job_duration: String,
-    job_title: String,
+    job_title: { type: String, index: true },
     insurance: { type: Number, min: -1, max: 1 },
     learn: String,
     learn_score: { type: Number, min: 0, max: 5 },
@@ -39,4 +39,11 @@ const articleSchema = new Schema({
     timestamps: true,
 });
 
-module.exports = mongoose.model('article', articleSchema);
+let model = mongoose.model('article', articleSchema);
+
+model.on('index', (error) => {
+    if (error)
+        console.log('Indexing articles:', error);
+});
+
+module.exports = model;
